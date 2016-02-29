@@ -1,7 +1,9 @@
 import pygame
+import math
 
 import constants
 import structures
+import enemies
 
 
 class Level():
@@ -11,6 +13,7 @@ class Level():
 
     # Lists of sprites used in all levels. Add or remove
     # lists as needed for your game. """
+    FLOOR = 575
     platform_list = None
     enemy_list = None
 
@@ -60,6 +63,15 @@ class Level():
         for enemy in self.enemy_list:
             enemy.rect.x += shift_x
 
+    def make_floor(self, structure, x, y, length):
+        floor = []
+        number_of_platforms = math.ceil(length // 70)
+        for i in range(number_of_platforms):
+            platform_x = i * 70 + x
+            platform = (structure, platform_x, y)
+            floor.append(platform)
+        return floor
+
 # Create structures for the level
 class Level_01(Level):
     """ Definition for level 1. """
@@ -74,24 +86,28 @@ class Level_01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
+        enemy_list = [(500, 250)]
+
         platforms = []  # Anything not on ground (excluding spikes)
 
         # Array with type of platform, and x, y location of the platform.
         level = [ (structures.INVISIBLE_WALL, -80, 0),
-                  (structures.GRASS_LEFT, 500, 500),
-                  (structures.GRASS_MIDDLE, 570, 500),
-                  (structures.GRASS_RIGHT, 640, 500),
-                  (structures.GRASS_LEFT, 800, 400),
-                  (structures.GRASS_MIDDLE, 870, 400),
-                  (structures.GRASS_RIGHT, 940, 400),
-                  (structures.GRASS_LEFT, 1000, 500),
-                  (structures.GRASS_MIDDLE, 1070, 500),
-                  (structures.GRASS_RIGHT, 1140, 500),
-                  (structures.STONE_PLATFORM_LEFT, 1120, 280),
-                  (structures.STONE_PLATFORM_MIDDLE, 1190, 280),
-                  (structures.STONE_PLATFORM_RIGHT, 1260, 280),
+                  (structures.GRASS_LEFT, 770, 450),
+                  (structures.GRASS_MIDDLE, 840, 450),
+                  (structures.GRASS_RIGHT, 910, 450),
+                  (structures.STONE_PLATFORM_LEFT, 1120, 300),
+                  (structures.STONE_PLATFORM_MIDDLE, 1190, 300),
+                  (structures.STONE_PLATFORM_RIGHT, 1260, 300),
                   ]
+        floors = []
+        first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
+        second_floor = self.make_floor(structures.GRASS_MIDDLE, 1050, self.FLOOR, 1000)
+        floors.append(first_floor)
+        floors.append(second_floor)
 
+        for floor in floors:
+            for platform in floor:
+                level.append(platform)
 
         # Go through the array above and add structures
         for platform in level:
@@ -101,10 +117,21 @@ class Level_01(Level):
             block.player = self.player
             self.platform_list.add(block)
 
+        for enemy in enemy_list:
+            block = enemies.Fly()
+            block.rect.x = enemy[0]
+            block.rect.y = enemy[1]
+            block.boundary_left = enemy[0]
+            block.boundary_right = enemy[0] + 300
+            block.player = self.player
+            block.level = self
+            self.enemy_list.add(block)
+            print("setup")
+
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
         block.rect.x = 1350
-        block.rect.y = 280
+        block.rect.y = 300
         block.boundary_left = 1350
         block.boundary_right = 1600
         block.change_x = 1
@@ -127,8 +154,9 @@ class Level_02(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -1000
 
+
         # Array with type of platform, and x, y location of the platform.
-        level = [ [structures.INVISIBLE_WALL, -70, 10],
+        structures_list = [ [structures.INVISIBLE_WALL, -70, 10],
                   [structures.STONE_PLATFORM_LEFT, 500, 550],
                   [structures.STONE_PLATFORM_MIDDLE, 570, 550],
                   [structures.STONE_PLATFORM_RIGHT, 640, 550],
@@ -145,12 +173,13 @@ class Level_02(Level):
 
 
         # Go through the array above and add structures
-        for platform in level:
+        for platform in structures_list:
             block = structures.Platform(platform[0])
             block.rect.x = platform[1]
             block.rect.y = platform[2]
             block.player = self.player
             self.platform_list.add(block)
+
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
