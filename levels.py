@@ -3,6 +3,7 @@ import pygame
 import constants
 import structures
 
+
 class Level():
     """ This is a generic super-class used to define a level.
         Create a child class for each level with level-specific
@@ -73,20 +74,22 @@ class Level_01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
+        platforms = []  # Anything not on ground (excluding spikes)
+
         # Array with type of platform, and x, y location of the platform.
-        level = [ [structures.INVISIBLE_WALL, -70, 0],
-                  [structures.GRASS_LEFT, 500, 500],
-                  [structures.GRASS_MIDDLE, 570, 500],
-                  [structures.GRASS_RIGHT, 640, 500],
-                  [structures.GRASS_LEFT, 800, 400],
-                  [structures.GRASS_MIDDLE, 870, 400],
-                  [structures.GRASS_RIGHT, 940, 400],
-                  [structures.GRASS_LEFT, 1000, 500],
-                  [structures.GRASS_MIDDLE, 1070, 500],
-                  [structures.GRASS_RIGHT, 1140, 500],
-                  [structures.STONE_PLATFORM_LEFT, 1120, 280],
-                  [structures.STONE_PLATFORM_MIDDLE, 1190, 280],
-                  [structures.STONE_PLATFORM_RIGHT, 1260, 280],
+        level = [ (structures.INVISIBLE_WALL, -80, 0),
+                  (structures.GRASS_LEFT, 500, 500),
+                  (structures.GRASS_MIDDLE, 570, 500),
+                  (structures.GRASS_RIGHT, 640, 500),
+                  (structures.GRASS_LEFT, 800, 400),
+                  (structures.GRASS_MIDDLE, 870, 400),
+                  (structures.GRASS_RIGHT, 940, 400),
+                  (structures.GRASS_LEFT, 1000, 500),
+                  (structures.GRASS_MIDDLE, 1070, 500),
+                  (structures.GRASS_RIGHT, 1140, 500),
+                  (structures.STONE_PLATFORM_LEFT, 1120, 280),
+                  (structures.STONE_PLATFORM_MIDDLE, 1190, 280),
+                  (structures.STONE_PLATFORM_RIGHT, 1260, 280),
                   ]
 
 
@@ -125,7 +128,7 @@ class Level_02(Level):
         self.level_limit = -1000
 
         # Array with type of platform, and x, y location of the platform.
-        level = [ [structures.INVISIBLE_WALL, -70, 0],
+        level = [ [structures.INVISIBLE_WALL, -70, 10],
                   [structures.STONE_PLATFORM_LEFT, 500, 550],
                   [structures.STONE_PLATFORM_MIDDLE, 570, 550],
                   [structures.STONE_PLATFORM_RIGHT, 640, 550],

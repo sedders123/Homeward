@@ -56,19 +56,28 @@ def main():
             if event.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
 
+            left_control_keys = [pygame.K_LEFT, pygame.K_a]
+            right_control_keys = [pygame.K_d, pygame.K_RIGHT]
+            up_control_keys = [pygame.K_w, pygame.K_UP, pygame.K_SPACE]
+            down_control_keys = [pygame.K_DOWN, pygame.K_s]
+
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key in left_control_keys:
                     player.go_left()
-                if event.key == pygame.K_RIGHT:
+                if event.key in right_control_keys:
                     player.go_right()
-                if event.key == pygame.K_UP:
+                if event.key in up_control_keys:
                     player.jump()
+                if event.key in down_control_keys:
+                    player.duck()
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT and player.change_x < 0:
+                if event.key in left_control_keys and player.change_x < 0:
                     player.stop()
-                if event.key == pygame.K_RIGHT and player.change_x > 0:
+                if event.key in right_control_keys and player.change_x > 0:
                     player.stop()
+                if event.key in down_control_keys and player.change_y > 0:
+                    player.stand_up()
 
         # Update the player.
         active_sprite_list.update()

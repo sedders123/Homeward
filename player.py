@@ -9,6 +9,7 @@ import constants
 from structures import MovingPlatform
 from spritesheet import SpriteSheet
 
+
 class Player(pygame.sprite.Sprite):
     """ This class represents the bar at the bottom that the player
     controls. """
@@ -168,3 +169,9 @@ class Player(pygame.sprite.Sprite):
     def stop(self):
         """ Called when the user lets off the keyboard. """
         self.change_x = 0
+
+    def duck(self):
+        pass
+
+    def stand_up(self):
+        pass
