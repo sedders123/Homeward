@@ -22,7 +22,7 @@ def main():
     size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
     screen = pygame.display.set_mode(size)
 
-    pygame.display.set_caption("Yet to be named")
+    pygame.display.set_caption("Homeward")
 
     # Create the player
     player = Player()
