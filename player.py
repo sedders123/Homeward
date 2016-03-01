@@ -84,6 +84,9 @@ class Player(pygame.sprite.Sprite):
         # Set a referance to the image rect.
         self.rect = self.image.get_rect()
 
+        self.health = 100
+        self.invincible = False
+
     def update(self):
         """ Move the player. """
         # Gravity
@@ -98,6 +101,11 @@ class Player(pygame.sprite.Sprite):
         else:
             frame = (pos // 30) % len(self.walking_frames_l)
             self.image = self.walking_frames_l[frame]
+
+        if self.invincible:
+            time_since_last_hit = pygame.time.get_ticks() - self.last_hit
+            if time_since_last_hit > 3000:
+                self.invincible = False
 
         # See if we hit anything
         block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
@@ -128,6 +136,7 @@ class Player(pygame.sprite.Sprite):
 
             if isinstance(block, MovingPlatform):
                 self.rect.x += block.change_x
+
 
     def calc_grav(self):
         """ Calculate effect of gravity. """
@@ -175,3 +184,9 @@ class Player(pygame.sprite.Sprite):
 
     def stand_up(self):
         pass
+
+    def hit(self):
+        self.health -= 10
+        self.invincible = True
+        self.last_hit = pygame.time.get_ticks()
+        print("Player Hit")

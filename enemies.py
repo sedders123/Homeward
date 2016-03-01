@@ -1,4 +1,5 @@
 import pygame
+import constants
 
 from spritesheet import SpriteSheet
 
@@ -12,7 +13,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def __init__(self, sprite_sheet_data=None):
         """ Enemy constructor. Assumes constructed with user passing in
-            an array of 5 numbers like what's defined at the top of this
+            an array of 4 numbers like what's defined at the top of this
             code. """
         pygame.sprite.Sprite.__init__(self)
 
@@ -66,22 +67,48 @@ class Fly(Enemy):
 
         self.image = self.frames_right[0]
         self.rect = self.image.get_rect()
+        self.alive = True
 
     def update(self):
-        """ Move the Enemy."""
-        pos = self.rect.x - self.level.world_shift
-        frame = (pos // 30) % 2  # 2 numbers of states
-        if self.change_x < 1:
-            self.image = self.frames_left[frame]
+        """ Move the Fly."""
+
+        if self.alive:
+            pos = self.rect.x - self.level.world_shift
+            frame = (pos // 30) % 2  # 2 numbers of states
+            if self.change_x < 1:
+                self.image = self.frames_left[frame]
+            else:
+                self.image = self.frames_right[frame]
+
+            self.rect.x += self.change_x
+            hit = pygame.sprite.collide_rect(self, self.player)
+            if hit and not self.player.invincible:
+                if self.player.change_y > 0:
+                    self.alive = False
+                    self.time_killed = pygame.time.get_ticks()
+                    self.bounce_player()
+                else:
+                    self.player.hit()
+
+            cur_pos = self.rect.x - self.level.world_shift
+            if cur_pos < self.boundary_left or cur_pos > self.boundary_right:
+                self.change_x *= -1
         else:
-            self.image = self.frames_right[frame]
+            time_since_killed = pygame.time.get_ticks() - self.time_killed
+            if time_since_killed < 700:
+                self.image = self.sprite_sheet.get_image(FLY_DEAD[0],
+                                                         FLY_DEAD[1],
+                                                         FLY_DEAD[2],
+                                                         FLY_DEAD[3])
+                self.rect.y += 10
+            else:
+                self.kill()
 
-        self.rect.x += self.change_x
-        hit = pygame.sprite.collide_rect(self, self.player)
+    def bounce_player(self):
+        self.player.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self.player, self.level.platform_list, False)
+        self.player.rect.y -= 2
 
-        if hit:
-            print("Hit")
-
-        cur_pos = self.rect.x - self.level.world_shift
-        if cur_pos < self.boundary_left or cur_pos > self.boundary_right:
-            self.change_x *= -1
+        # If it is ok to jump, set our speed upwards
+        if len(platform_hit_list) >= 0 or self.player.rect.bottom >= constants.SCREEN_HEIGHT:
+            self.player.change_y = -5

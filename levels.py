@@ -86,7 +86,7 @@ class Level_01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
-        enemy_list = [(500, 250)]
+        enemy_list = [(700, 250)]
 
         platforms = []  # Anything not on ground (excluding spikes)
 
@@ -126,7 +126,6 @@ class Level_01(Level):
             block.player = self.player
             block.level = self
             self.enemy_list.add(block)
-            print("setup")
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
