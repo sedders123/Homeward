@@ -66,7 +66,6 @@ def main():
             up_control_keys = [pygame.K_w, pygame.K_UP, pygame.K_SPACE]
             down_control_keys = [pygame.K_DOWN, pygame.K_s]
 
-
             if event.type == pygame.KEYDOWN:
                 if event.key in left_control_keys:
                     player.go_left()
@@ -78,7 +77,13 @@ def main():
                     player.duck()
 
                 if event.key == pygame.K_LEFT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                    current_level_no += 1
+                    current_level_no -= 1
+                    current_level = level_list[current_level_no]
+                    player.level = current_level
+                    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+
+                if event.key == pygame.K_RIGHT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                    current_level_no -= 1
                     current_level = level_list[current_level_no]
                     player.level = current_level
                     player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
