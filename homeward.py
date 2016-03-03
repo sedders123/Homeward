@@ -10,6 +10,7 @@ import pygame
 
 import constants
 import levels
+import HUD
 
 from player import Player
 
@@ -37,6 +38,10 @@ def main():
     current_level_no = 0
     current_level = level_list[current_level_no]
 
+    #HUD
+    game_HUD = HUD.HUD(player)
+
+
     active_sprite_list = pygame.sprite.Group()
     player.level = current_level
 
@@ -61,6 +66,7 @@ def main():
             up_control_keys = [pygame.K_w, pygame.K_UP, pygame.K_SPACE]
             down_control_keys = [pygame.K_DOWN, pygame.K_s]
 
+
             if event.type == pygame.KEYDOWN:
                 if event.key in left_control_keys:
                     player.go_left()
@@ -70,6 +76,12 @@ def main():
                     player.jump()
                 if event.key in down_control_keys:
                     player.duck()
+
+                if event.key == pygame.K_LEFT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                    current_level_no += 1
+                    current_level = level_list[current_level_no]
+                    player.level = current_level
+                    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
             if event.type == pygame.KEYUP:
                 if event.key in left_control_keys and player.change_x < 0:
@@ -81,6 +93,9 @@ def main():
 
         # Update the player.
         active_sprite_list.update()
+
+        # Update HUD
+        game_HUD.update()
 
         # Update items in the level
         current_level.update()
@@ -106,10 +121,12 @@ def main():
                 current_level_no += 1
                 current_level = level_list[current_level_no]
                 player.level = current_level
+                player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         current_level.draw(screen)
         active_sprite_list.draw(screen)
+        game_HUD.draw(screen)
 
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 
