@@ -30,6 +30,7 @@ class Level():
         self.platform_list = pygame.sprite.Group()
         self.enemy_list = pygame.sprite.Group()
         self.player = player
+        self.score = 0
 
     # Update everythign on this level
     def update(self):
@@ -86,7 +87,7 @@ class Level_01(Level):
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
-        enemy_list = [(700, 250)]
+        enemy_list = [("FLY", 700, 250), ("SLIME", 700, 100)]
 
         platforms = []  # Anything not on ground (excluding spikes)
 
@@ -118,14 +119,24 @@ class Level_01(Level):
             self.platform_list.add(block)
 
         for enemy in enemy_list:
-            block = enemies.Fly()
-            block.rect.x = enemy[0]
-            block.rect.y = enemy[1]
-            block.boundary_left = enemy[0]
-            block.boundary_right = enemy[0] + 300
-            block.player = self.player
-            block.level = self
-            self.enemy_list.add(block)
+            if enemy[0] == "FLY":
+                block = enemies.Fly()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 300
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
+            elif enemy[0] == "SLIME":
+                block = enemies.Slime()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 100
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
