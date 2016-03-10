@@ -84,3 +84,9 @@ class HealthBar(pygame.sprite.Group):
             self.hearts.append(Heart(5))
         for i in range((5-no_of_hearts)):  # Display empty hearts
             self.hearts.append(Heart(0))
+
+    def draw(self, screen):
+        for i, heart in enumerate(self.hearts):
+            heart.rect.y = 100
+            heart.rect.x = 500 + (i+1)*10
+            heart.draw(screen)

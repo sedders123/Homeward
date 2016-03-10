@@ -83,7 +83,7 @@ def main():
                     player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
                 if event.key == pygame.K_RIGHT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                    current_level_no -= 1
+                    current_level_no += 1
                     current_level = level_list[current_level_no]
                     player.level = current_level
                     player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25

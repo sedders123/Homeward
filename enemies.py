@@ -116,6 +116,7 @@ class Fly(Enemy):
         if len(platform_hit_list) >= 0 or self.player.rect.bottom >= constants.SCREEN_HEIGHT:
             self.player.change_y = -5
 
+
 class Slime(Enemy):
     def __init__(self):
         Enemy.__init__(self)
