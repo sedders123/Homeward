@@ -201,9 +201,9 @@ class Level_02(Level):
         block.player = self.player
         block.level = self
         self.platform_list.add(block)
-    
-    class Level_03(Level):
-    """ Definition for level 3. """
+
+class Level_03(Level):
+""" Definition for level 3. """
 
     def __init__(self, player):
         """ Create level 3. """
@@ -231,7 +231,7 @@ class Level_02(Level):
                   (structures.STONE_PLATFORM_LEFT, 1870, 425),
                   (structures.STONE_PLATFORM_MIDDLE, 1940, 425),
                   (structures.STONE_PLATFORM_RIGHT, 2010, 425),
-                  
+
                   ]
         floors = []
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
@@ -295,4 +295,3 @@ class Level_02(Level):
         block.player = self.player
         block.level = self
         self.platform_list.add(block)
-
