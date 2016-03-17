@@ -33,6 +33,7 @@ def main():
     #level_list.append(menu.MainMenu())
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))
+    level_list.append(levels.Level_03(player))
 
     # Set the current level
     current_level_no = 0

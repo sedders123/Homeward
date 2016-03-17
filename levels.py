@@ -73,6 +73,7 @@ class Level():
             floor.append(platform)
         return floor
 
+
 # Create structures for the level
 class Level_01(Level):
     """ Definition for level 1. """
@@ -203,7 +204,7 @@ class Level_02(Level):
         self.platform_list.add(block)
 
 class Level_03(Level):
-""" Definition for level 3. """
+    """ Definition for level 3. """
 
     def __init__(self, player):
         """ Create level 3. """
