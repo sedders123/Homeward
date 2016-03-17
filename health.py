@@ -13,38 +13,37 @@ HEART_HALF = (0, 0, 53, 45)
 class HUD():
     def __init__(self, player):
         self.player = player
-        self.hud_items_list = pygame.sprite.OrderedUpdates()
+        self.health_draw_list = pygame.sprite.OrderedUpdates()
         self.hearts = []
         self.health_bar()
 
     def update(self):
         """ Update everything in this level."""
-        self.hud_items_list.update()
+        self.health_draw_list.update()
         if self.player.health < self.last_health:
             self.health_bar()
 
     def draw(self, screen):
-        for i, heart in enumerate(self.hud_items_list.sprites()):
+        for i, heart in enumerate(self.health_draw_list.sprites()):
             heart.rect.y = 10
             heart.rect.x = (i+0.1)*55
-        self.hud_items_list.draw(screen)
+        self.health_draw_list.draw(screen)
 
     def health_bar(self):
         health = self.player.health
         self.last_health = health
 
         for heart in self.hearts:
-            self.hud_items_list.remove(heart)
+            self.health_draw_list.remove(heart)
         self.hearts = []
 
         no_of_full_hearts, no_of_half_hearts = self.calculate_no_hearts(health)
         no_of_empty_hearts = 5 - (no_of_full_hearts + no_of_half_hearts)
 
-
-        print("Health: {}".format(health))
-        print("Full: {}".format(no_of_full_hearts))
-        print("Half: {}".format(no_of_half_hearts))
-        print("Empty: {}".format(no_of_empty_hearts))
+        # print("Health: {}".format(health))
+        # print("Full: {}".format(no_of_full_hearts))
+        # print("Half: {}".format(no_of_half_hearts))
+        # print("Empty: {}".format(no_of_empty_hearts))
 
         for i in range(no_of_full_hearts):
             self.hearts.append(Heart(10))
@@ -54,8 +53,7 @@ class HUD():
             self.hearts.append(Heart(0))
 
         for heart in self.hearts:
-            self.hud_items_list.add(heart)
-        print(self.hud_items_list.sprites())
+            self.health_draw_list.add(heart)
 
     def calculate_no_hearts(self, health):
         no_of_hearts = health / 20
@@ -74,9 +72,9 @@ class HUDItem(pygame.sprite.Sprite):
         self.sprite_sheet = SpriteSheet("resources/hud_spritesheet.png")
         if sprite_sheet_data:
             self.image = self.sprite_sheet.get_image(sprite_sheet_data[0],
-                                                 sprite_sheet_data[1],
-                                                 sprite_sheet_data[2],
-                                                 sprite_sheet_data[3])
+                                                     sprite_sheet_data[1],
+                                                     sprite_sheet_data[2],
+                                                     sprite_sheet_data[3])
             self.rect = self.image.get_rect()
 
 
