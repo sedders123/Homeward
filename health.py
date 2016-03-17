@@ -112,19 +112,3 @@ class Heart(HUDItem):
             self.rect = self.image.get_rect()
         else:
             print("Error in heart creation")
-
-
-class HealthBar(pygame.sprite.Group):
-    def __init__(self, player):
-        pygame.sprite.Group.__init__(self)
-        self.player = player
-
-    def update(self):
-        pass
-
-    def draw(self, screen):
-        for i, heart in enumerate(self.sprites()):
-            heart.rect.y = 100
-            heart.rect.x = 500 + (i+1)*10
-            heart.draw(screen)
-            print("Test")
