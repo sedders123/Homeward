@@ -86,15 +86,17 @@ class Player(pygame.sprite.Sprite):
 
         self.health = 100
         self.invincible = False
+        self.score = 0
 
     def update(self):
         """ Move the player. """
         # Gravity
+        self.pos = self.rect.x + self.level.world_shift
         self.calc_grav()
 
         # Move left/right
         self.rect.x += self.change_x
-        pos = self.rect.x + self.level.world_shift
+        pos = self.pos
         if self.direction == "R":
             frame = (pos // 30) % len(self.walking_frames_r)
             self.image = self.walking_frames_r[frame]
@@ -146,9 +148,14 @@ class Player(pygame.sprite.Sprite):
             self.change_y += .35
 
         # See if we are on the ground.
-        if self.rect.y >= constants.SCREEN_HEIGHT - self.rect.height and self.change_y >= 0:
+        if self.rect.y >= constants.SCREEN_HEIGHT + self.rect.height and self.change_y >= 0:
             self.change_y = 0
-            self.rect.y = constants.SCREEN_HEIGHT - self.rect.height
+            self.rect.x = 340
+            self.rect.y = 0
+            self.health -= 20
+            self.invincible = True
+            self.last_hit = pygame.time.get_ticks()
+            print("Fallen")
 
     def jump(self):
         """ Called when user hits 'jump' button. """

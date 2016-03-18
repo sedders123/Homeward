@@ -45,7 +45,7 @@ class Level():
         # We don't shift the background as much as the sprites are shifted
         # to give a feeling of depth.
         screen.fill(constants.BLUE)
-        screen.blit(self.background,(self.world_shift // 3,0))
+        screen.blit(self.background, (self.world_shift // 3, 0))
 
         # Draw all the sprite lists that we have
         self.platform_list.draw(screen)
@@ -233,11 +233,12 @@ class Level_03(Level):
                   (structures.STONE_PLATFORM_MIDDLE, 1940, 425),
                   (structures.STONE_PLATFORM_RIGHT, 2010, 425),
 
+
                   ]
         floors = []
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
         second_floor = self.make_floor(structures.GRASS_MIDDLE, 1050, self.FLOOR, 500)
-        third_floor = self.make_floor(structures.GRASS_MIDDLE, 1700, self.FLOOR, 1000)
+        third_floor = self.make_floor(structures.GRASS_MIDDLE, 1700, self.FLOOR, 600)
         floors.append(first_floor)
         floors.append(second_floor)
         floors.append(third_floor)
@@ -292,6 +293,39 @@ class Level_03(Level):
         block.rect.y = 300
         block.boundary_top = 100
         block.boundary_bottom = 550
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
+        block.rect.x = 2140
+        block.rect.y = 425
+        block.boundary_top = 100
+        block.boundary_bottom = 550
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
+        block.rect.x = 2340
+        block.rect.y = 200
+        block.boundary_top = 100
+        block.boundary_bottom = 500
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+         # Add a custom moving platform
+        block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
+        block.rect.x = 2540
+        block.rect.y = 320
+        block.boundary_top = 100
+        block.boundary_bottom = 500
         block.change_y = -1
         block.player = self.player
         block.level = self

@@ -10,7 +10,7 @@ import pygame
 
 import constants
 import levels
-import HUD
+import health
 
 from player import Player
 
@@ -40,7 +40,7 @@ def main():
     current_level = level_list[current_level_no]
 
     #HUD
-    game_HUD = HUD.HUD(player)
+    game_HUD = health.HUD(player)
 
 
     active_sprite_list = pygame.sprite.Group()
