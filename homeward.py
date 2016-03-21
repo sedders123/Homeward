@@ -11,6 +11,7 @@ import pygame
 import constants
 import levels
 import health
+import score
 
 from player import Player
 
@@ -34,6 +35,7 @@ def main():
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))
     level_list.append(levels.Level_03(player))
+    level_list.append(levels.Level_04(player))
 
     # Set the current level
     current_level_no = 0
@@ -41,6 +43,7 @@ def main():
 
     #HUD
     game_HUD = health.HUD(player)
+    score_HUD = score.ScoreHUD(player)
 
 
     active_sprite_list = pygame.sprite.Group()
@@ -102,6 +105,7 @@ def main():
 
         # Update HUD
         game_HUD.update()
+        score_HUD.update()
 
         # Update items in the level
         current_level.update()
@@ -133,6 +137,7 @@ def main():
         current_level.draw(screen)
         active_sprite_list.draw(screen)
         game_HUD.draw(screen)
+        score_HUD.draw(screen)
 
         # ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 

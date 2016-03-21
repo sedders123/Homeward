@@ -4,8 +4,8 @@ import constants
 from spritesheet import SpriteSheet
 
 FLY_DEAD = (143, 0, 59, 33)
-FLY_WINGS_UP = (0, 32, 72, 36)
-FLY_WINGS_DOWN = (0, 0, 75, 31)
+FLY_WINGS_UP = (0, 34, 72, 36)
+FLY_WINGS_DOWN = (0, 0, 75, 36)
 SLIME_WALK_1 = (52, 125, 50, 28)
 SLIME_WALK_2 = (0, 125, 51, 26)
 
@@ -89,7 +89,7 @@ class Fly(Enemy):
                     self.alive = False
                     self.time_killed = pygame.time.get_ticks()
                     self.bounce_player()
-                    self.level.score += 10
+                    self.player.score += 10
                 else:
                     self.player.hit()
 
@@ -175,7 +175,7 @@ class Slime(Enemy):
                     self.alive = False
                     self.time_killed = pygame.time.get_ticks()
                     self.bounce_player()
-                    self.level.score += 10
+                    self.player.score += 10
                 else:
                     self.player.hit()
 

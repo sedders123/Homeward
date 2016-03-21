@@ -222,26 +222,175 @@ class Level_03(Level):
 
         # Array with type of platform, and x, y location of the platform.
         level = [ (structures.INVISIBLE_WALL, -80, 0),
-                  (structures.STONE_PLATFORM_LEFT, 700, 450),
-                  (structures.STONE_PLATFORM_MIDDLE, 770, 450),
-                  (structures.STONE_PLATFORM_RIGHT, 840, 450),
-                  (structures.STONE_PLATFORM_LEFT, 1120, 200),
-                  (structures.STONE_PLATFORM_MIDDLE, 1190, 200),
-                  (structures.STONE_PLATFORM_MIDDLE, 1260, 200),
-                  (structures.STONE_PLATFORM_RIGHT, 1300, 200),
-                  (structures.STONE_PLATFORM_LEFT, 1870, 425),
-                  (structures.STONE_PLATFORM_MIDDLE, 1940, 425),
-                  (structures.STONE_PLATFORM_RIGHT, 2010, 425),
+                  (structures.GRASS_LEFT, 700, 450),
+                  (structures.GRASS_MIDDLE, 770, 450),
+                  (structures.GRASS_RIGHT, 840, 450),
+                  (structures.GRASS_LEFT, 1120, 200),
+                  (structures.GRASS_MIDDLE, 1190, 200),
+                  (structures.GRASS_MIDDLE, 1260, 200),
+                  (structures.GRASS_RIGHT, 1330, 200),
+                  (structures.GRASS_LEFT, 1870, 400),
+                  (structures.GRASS_MIDDLE, 1940, 400),
+                  (structures.GRASS_RIGHT, 2010, 400),
 
 
                   ]
         floors = []
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
         second_floor = self.make_floor(structures.GRASS_MIDDLE, 1050, self.FLOOR, 500)
-        third_floor = self.make_floor(structures.GRASS_MIDDLE, 1700, self.FLOOR, 600)
+        third_floor = self.make_floor(structures.GRASS_MIDDLE, 1750, self.FLOOR, 600)
+        fourth_floor = self.make_floor(structures.GRASS_MIDDLE, 3000, self.FLOOR, 600)
         floors.append(first_floor)
         floors.append(second_floor)
         floors.append(third_floor)
+        floors.append(fourth_floor)
+
+        for floor in floors:
+            for platform in floor:
+                level.append(platform)
+
+        # Go through the array above and add structures
+        for platform in level:
+            block = structures.Platform(platform[0])
+            block.rect.x = platform[1]
+            block.rect.y = platform[2]
+            block.player = self.player
+            self.platform_list.add(block)
+
+        for enemy in enemy_list:
+            if enemy[0] == "FLY":
+                block = enemies.Fly()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 300
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
+            elif enemy[0] == "SLIME":
+                block = enemies.Slime()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 200
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
+
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 1400
+        block.rect.y = 300
+        block.boundary_left = 1400
+        block.boundary_right = 1600
+        block.change_x = 1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 1025
+        block.rect.y = 300
+        block.boundary_top = 100
+        block.boundary_bottom = 550
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 2140
+        block.rect.y = 425
+        block.boundary_top = 100
+        block.boundary_bottom = 550
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 2340
+        block.rect.y = 200
+        block.boundary_top = 100
+        block.boundary_bottom = 500
+        block.change_y = 3
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+         # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 2540
+        block.rect.y = 100
+        block.boundary_top = 100
+        block.boundary_bottom = 500
+        block.change_y = -1
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+        # Add a custom moving platform
+        block = structures.MovingPlatform(structures.GRASS_ROUND)
+        block.rect.x = 2740
+        block.rect.y = 100
+        block.boundary_top = 100
+        block.boundary_bottom = 500
+        block.change_y = 3
+        block.player = self.player
+        block.level = self
+        self.platform_list.add(block)
+
+
+class Level_04(Level):
+    """ Definition for level 4. """
+
+    def __init__(self, player):
+        """ Create level 4. """
+
+        # Call the parent constructor
+        Level.__init__(self, player)
+
+        self.background = pygame.image.load("resources/background_03.png").convert()
+        self.background.set_colorkey(constants.WHITE)
+        self.level_limit = -2500  # equals width of image + width of window? Needs testing
+
+        enemy_list = [("FLY", 600, 250), ("SLIME", 1000, 275), ("FLY", 1400, 210), ("SLIME", 1870, 550)]
+
+        platforms = []  # Anything not on ground (excluding spikes)
+
+        # Array with type of platform, and x, y location of the platform.
+        level = [ (structures.INVISIBLE_WALL, -80, 0),
+                  (structures.STONE_CLIFF_LEFT, 700, 450),
+                  (structures.STONE_CLIFF_MIDDLE, 770, 450),
+                  (structures.STONE_CLIFF_RIGHT, 840, 450),
+                  (structures.STONE_CLIFF_LEFT, 1000, 300),
+                  (structures.STONE_CLIFF_MIDDLE, 1070, 300),
+                  (structures.STONE_CLIFF_MIDDLE, 1140, 300),
+                  (structures.STONE_CLIFF_RIGHT, 1210, 300),
+                  (structures.STONE_CLIFF_LEFT, 1870, 100),
+                  (structures.STONE_CLIFF_MIDDLE, 1940, 100),
+                  (structures.STONE_CLIFF_RIGHT, 2010, 100),
+                  (structures.STONE_CLIFF_LEFT, 2300, 250),
+                  (structures.STONE_CLIFF_RIGHT, 2370, 250),
+                  (structures.STONE_CLIFF_LEFT, 2650, 350),
+                  (structures.STONE_CLIFF_RIGHT, 2720, 350),
+
+
+
+                  ]
+        floors = []
+        first_floor = self.make_floor(structures.STONE_CLIFF_MIDDLE, -5, self.FLOOR, 1000)
+        second_floor = self.make_floor(structures.STONE_CLIFF_MIDDLE, 1050, self.FLOOR, 500)
+        third_floor = self.make_floor(structures.STONE_CLIFF_MIDDLE, 1700, self.FLOOR, 600)
+        fourth_floor = self.make_floor(structures.STONE_CLIFF_MIDDLE, 2900, self.FLOOR, 600)
+        floors.append(first_floor)
+        floors.append(second_floor)
+        floors.append(third_floor)
+        floors.append(fourth_floor)
 
         for floor in floors:
             for platform in floor:
@@ -278,10 +427,10 @@ class Level_03(Level):
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 1400
+        block.rect.x = 1280
         block.rect.y = 300
-        block.boundary_left = 1400
-        block.boundary_right = 1600
+        block.boundary_left = 1280
+        block.boundary_right = 1480
         block.change_x = 1
         block.player = self.player
         block.level = self
@@ -289,32 +438,10 @@ class Level_03(Level):
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 1025
-        block.rect.y = 300
+        block.rect.x = 1600
+        block.rect.y = 400
         block.boundary_top = 100
         block.boundary_bottom = 550
-        block.change_y = -1
-        block.player = self.player
-        block.level = self
-        self.platform_list.add(block)
-
-        # Add a custom moving platform
-        block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 2140
-        block.rect.y = 425
-        block.boundary_top = 100
-        block.boundary_bottom = 550
-        block.change_y = -1
-        block.player = self.player
-        block.level = self
-        self.platform_list.add(block)
-
-        # Add a custom moving platform
-        block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 2340
-        block.rect.y = 200
-        block.boundary_top = 100
-        block.boundary_bottom = 500
         block.change_y = -1
         block.player = self.player
         block.level = self
@@ -322,7 +449,7 @@ class Level_03(Level):
 
          # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
-        block.rect.x = 2540
+        block.rect.x = 2840
         block.rect.y = 320
         block.boundary_top = 100
         block.boundary_bottom = 500
