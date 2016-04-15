@@ -11,7 +11,7 @@ from spritesheet import SpriteSheet
 #   Y location of sprite
 #   Width of sprite
 #   Height of sprite
-INVISIBLE_WALL        = (0, 0, 70, 700)
+INVISIBLE_WALL        = (0, 0, 0, 700)
 GRASS_LEFT            = (576, 720, 70, 70)
 GRASS_RIGHT           = (576, 576, 70, 70)
 GRASS_MIDDLE          = (504, 576, 70, 70)

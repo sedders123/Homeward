@@ -32,10 +32,13 @@ def main():
     # Create all the levels
     level_list = []
     #level_list.append(menu.MainMenu())
+    level_list.append(levels.LevelTutorial(player))
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))
     level_list.append(levels.Level_03(player))
     level_list.append(levels.Level_04(player))
+    level_list.append(levels.YouWin(player))
+    level_list.append(levels.GameOver(player))
 
     # Set the current level
     current_level_no = 0
@@ -131,9 +134,24 @@ def main():
             player.rect.x = 120
             if current_level_no < len(level_list)-1:
                 current_level_no += 1
+                print(current_level_no)
                 current_level = level_list[current_level_no]
                 player.level = current_level
                 player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+
+        if player.health <= 0:
+            current_level_no = len(level_list)-1
+            current_level = level_list[current_level_no]
+            player.level = current_level
+            player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 40
+            player.rect.x = (constants.SCREEN_WIDTH/2) - (player.rect.width/2)
+            time_since_death = pygame.time.get_ticks() - player.death_time
+            if time_since_death > 2000:
+                player.health = 100
+                current_level_no = 0
+                current_level = level_list[current_level_no]
+                player.level = current_level
+                player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 40
 
         # ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
         current_level.draw(screen)

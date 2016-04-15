@@ -155,6 +155,8 @@ class Player(pygame.sprite.Sprite):
             self.health -= 20
             self.invincible = True
             self.last_hit = pygame.time.get_ticks()
+            if self.health <= 0:
+                self.death_time = pygame.time.get_ticks()
             print("Fallen")
 
     def jump(self):
@@ -196,4 +198,6 @@ class Player(pygame.sprite.Sprite):
         self.health -= 10
         self.invincible = True
         self.last_hit = pygame.time.get_ticks()
+        if self.health <= 0:
+            self.death_time = pygame.time.get_ticks()
         print("Player Hit")

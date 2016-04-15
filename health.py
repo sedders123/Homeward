@@ -20,7 +20,7 @@ class HUD():
     def update(self):
         """ Update everything in this level."""
         self.health_draw_list.update()
-        if self.player.health < self.last_health:
+        if self.player.health < self.last_health or self.player.health > self.last_health:
             self.health_bar()
 
     def draw(self, screen):
@@ -56,6 +56,7 @@ class HUD():
             self.health_draw_list.add(heart)
 
     def calculate_no_hearts(self, health):
+        print(health)
         if not health <= 0:
             no_of_hearts = health / 20
             hearts_tuple = math.modf(no_of_hearts)
