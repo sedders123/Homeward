@@ -56,14 +56,19 @@ class HUD():
             self.health_draw_list.add(heart)
 
     def calculate_no_hearts(self, health):
-        no_of_hearts = health / 20
-        hearts_tuple = math.modf(no_of_hearts)
-        no_of_full_hearts = int(hearts_tuple[1])
-        if hearts_tuple[0] != 0:
-            no_of_half_hearts = 1
+        if not health <= 0:
+            no_of_hearts = health / 20
+            hearts_tuple = math.modf(no_of_hearts)
+            no_of_full_hearts = int(hearts_tuple[1])
+            if hearts_tuple[0] != 0:
+                no_of_half_hearts = 1
+            else:
+                no_of_half_hearts = 0
+            return no_of_full_hearts, no_of_half_hearts
         else:
+            no_of_full_hearts = 0
             no_of_half_hearts = 0
-        return no_of_full_hearts, no_of_half_hearts
+            return no_of_full_hearts, no_of_half_hearts
 
 
 class HUDItem(pygame.sprite.Sprite):

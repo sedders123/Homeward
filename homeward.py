@@ -81,16 +81,18 @@ def main():
                     player.duck()
 
                 if event.key == pygame.K_LEFT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                    current_level_no -= 1
-                    current_level = level_list[current_level_no]
-                    player.level = current_level
-                    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+                    if current_level_no > 0:
+                        current_level_no -= 1
+                        current_level = level_list[current_level_no]
+                        player.level = current_level
+                        player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
                 if event.key == pygame.K_RIGHT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                    current_level_no += 1
-                    current_level = level_list[current_level_no]
-                    player.level = current_level
-                    player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+                    if current_level_no < len(level_list)-1:
+                        current_level_no += 1
+                        current_level = level_list[current_level_no]
+                        player.level = current_level
+                        player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
             if event.type == pygame.KEYUP:
                 if event.key in left_control_keys and player.change_x < 0:

@@ -11,7 +11,7 @@ TWO   = (55, 98, 32, 38)
 THREE = (239, 80, 28, 38)
 FOUR  = (238, 122, 29, 38)
 FIVE  = (238, 162, 28, 38)
-SIX   = (230, 40, 20, 38)
+SIX   = (230, 40, 30, 38)
 SEVEN = (226, 206, 32, 39)
 EIGHT = (192, 206, 32, 40)
 NINE  = (196, 0, 32, 39)
@@ -33,7 +33,7 @@ class ScoreHUD():
     def draw(self, screen):
         for i, number in enumerate(self.score_draw_list.sprites()):
             number.rect.y = 10
-            number.rect.x = ((i+0.01)*55) + 700
+            number.rect.x = ((i+0.01)*55) + (constants.SCREEN_WIDTH - 100)
         self.score_draw_list.draw(screen)
 
     def score_tracker(self):
