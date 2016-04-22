@@ -18,4 +18,10 @@ Developed on Python 3.5 with PyGame 1.9.2.
 
 ### Windows
 #### ZIP File
-Download the files by clicking on the 'Download ZIP' button found at the top right if this page. Unzip the files and then open 'homeward.py' in IDLE and then press F5 to run. Alternatively execute via the command line
+Download the files by clicking on the 'Download ZIP' button found at the top right if this page unzip the files 
+
+## Run the Game
+### Command Line
+    python homeward.py
+### Python IDLE (Windows/Mac)
+Open 'homeward.py' in IDLE and then press F5 to run.
