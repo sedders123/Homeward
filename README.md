@@ -21,7 +21,7 @@ Developed on Python 3.5 with PyGame 1.9.2.
 Download the files by clicking on the 'Download ZIP' button found at the top right if this page unzip the files 
 
 ## Run the Game
-### Command Line
+### Command Line(Linux/Mac)
     python homeward.py
 ### Python IDLE (Windows/Mac)
 Open 'homeward.py' in IDLE and then press F5 to run.
