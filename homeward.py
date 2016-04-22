@@ -31,7 +31,7 @@ def main():
 
     # Create all the levels
     level_list = []
-    #level_list.append(menu.MainMenu())
+    level_list.append(levels.MainMenu(player))
     level_list.append(levels.LevelTutorial(player))
     level_list.append(levels.Level_01(player))
     level_list.append(levels.Level_02(player))

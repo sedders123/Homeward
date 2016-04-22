@@ -74,6 +74,40 @@ class Level():
         return floor
 
 
+class MainMenu(Level):
+    """ Definition for Main Menu"""
+
+    def __init__(self, player):
+        """ Create Main Menu level. """
+
+        # Call the parent constructor
+        Level.__init__(self, player)
+
+        self.background = pygame.image.load("resources/main_menu.png").convert()
+        self.background.set_colorkey(constants.WHITE)
+        self.level_limit = 100  # equals width of image + width of window? Needs testing
+
+        # Array with type of platform, and x, y location of the platform.
+        level = [ (structures.INVISIBLE_WALL, 0, 0)
+                  ]
+        floors = []
+        first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
+        floors.append(first_floor)
+
+        for floor in floors:
+            for platform in floor:
+                level.append(platform)
+
+        # Go through the array above and add structures
+        for platform in level:
+            block = structures.Platform(platform[0])
+            block.rect.x = platform[1]
+            block.rect.y = platform[2] - 15
+            block.player = self.player
+            self.platform_list.add(block)
+
+
+
 # Create structures for the level
 class LevelTutorial(Level):
     """ Definition for level tutorial. """
@@ -153,7 +187,7 @@ class Level_01(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("resources/background_01.png").convert()
+        self.background = pygame.image.load("resources/grass_background.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
@@ -311,7 +345,7 @@ class Level_02(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("resources/background_02.png").convert()
+        self.background = pygame.image.load("resources/ice_background.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -1200
 
@@ -407,7 +441,7 @@ class Level_03(Level):
         # Call the parent constructor
         Level.__init__(self, player)
 
-        self.background = pygame.image.load("resources/background_01.png").convert()
+        self.background = pygame.image.load("resources/grass_background.png").convert()
         self.background.set_colorkey(constants.WHITE)
         self.level_limit = -2500  # equals width of image + width of window? Needs testing
 
@@ -558,7 +592,7 @@ class Level_04(Level):
         platforms = []  # Anything not on ground (excluding spikes)
 
         # Array with type of platform, and x, y location of the platform.
-        level = [ (structures.INVISIBLE_WALL, 0, 0),
+        level = [ (structures.INVISIBLE_WALL, -80, 0),
                   (structures.STONE_CLIFF_LEFT, 700, 450),
                   (structures.STONE_CLIFF_MIDDLE, 770, 450),
                   (structures.STONE_CLIFF_RIGHT, 840, 450),
