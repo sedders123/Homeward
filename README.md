@@ -1,6 +1,5 @@
 # Homeward
-PyGame platformer for Unit 22 of IT BTEC course
-
+PyGame platformer
 ## Requirements
 
 * Python 3.4 +
@@ -18,7 +17,7 @@ Developed on Python 3.5 with PyGame 1.9.2.
 
 ### Windows
 #### ZIP File
-Download the files by clicking on the 'Download ZIP' button found at the top right if this page unzip the files 
+Download the files by clicking on the 'Download ZIP' button found at the top right if this page unzip the files
 
 ## Run the Game
 ### Command Line(Linux/Mac)
