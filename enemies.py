@@ -34,6 +34,8 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class Fly(Enemy):
+    name = "FLY"
+
     def __init__(self):
         Enemy.__init__(self)
         self.change_x = 1
@@ -120,6 +122,8 @@ class Fly(Enemy):
 
 
 class Slime(Enemy):
+    name = "SLIME"
+
     def __init__(self):
         Enemy.__init__(self)
         self.change_x = 1

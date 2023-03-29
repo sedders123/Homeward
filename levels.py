@@ -3,7 +3,7 @@ import math
 
 import constants
 import structures
-import enemies
+from enemies import Fly, Slime
 
 
 class Level:
@@ -87,8 +87,8 @@ class Level:
             self.platform_list.add(block)
 
         for enemy in level_enemies:
-            if enemy[0] == "SLIME":
-                block = enemies.Slime()
+            if enemy[0] == Slime.name:
+                block = Slime()
                 block.rect.x = enemy[1]
                 block.rect.y = enemy[2]
                 block.boundary_left = enemy[1]
@@ -96,8 +96,8 @@ class Level:
                 block.player = self.player
                 block.level = self
                 self.enemy_list.add(block)
-            elif enemy[0] == "FLY":
-                block = enemies.Fly()
+            elif enemy[0] == Fly.name:
+                block = Fly()
                 block.rect.x = enemy[1]
                 block.rect.y = enemy[2]
                 block.boundary_left = enemy[1]
@@ -147,7 +147,7 @@ class LevelTutorial(Level):
             -2500
         )  # equals width of image + width of window? Needs testing
 
-        enemy_list = [("FLY", 700, 250), ("SLIME", 1600, 550)]
+        enemy_list = [(Fly.name, 700, 250), (Slime.name, 1600, 550)]
 
         platforms = []  # Anything not on ground (excluding spikes)
 
@@ -197,7 +197,11 @@ class Level_01(Level):
             -2500
         )  # equals width of image + width of window? Needs testing
 
-        enemy_list = [("FLY", 700, 280), ("SLIME", 1120, 275), ("FLY", 2800, 140)]
+        enemy_list = [
+            (Fly.name, 700, 280),
+            (Slime.name, 1120, 275),
+            (Fly.name, 2800, 140),
+        ]
 
         platforms = []  # Anything not on ground (excluding spikes)
 
@@ -321,11 +325,11 @@ class Level_02(Level):
         self.level_limit = -1200
 
         enemy_list = [
-            ("FLY", 600, 250),
-            ("SLIME", 800, 375),
-            ("SLIME", 1000, 225),
-            ("FLY", 1400, 210),
-            ("SLIME", 1800, 405),
+            (Fly.name, 600, 250),
+            (Slime.name, 800, 375),
+            (Slime.name, 1000, 225),
+            (Fly.name, 1400, 210),
+            (Slime.name, 1800, 405),
         ]
 
         # Array with type of platform, and x, y location of the platform.
@@ -393,11 +397,11 @@ class Level_03(Level):
         )  # equals width of image + width of window? Needs testing
 
         enemy_list = [
-            ("FLY", 600, 250),
-            ("SLIME", 1100, 550),
-            ("SLIME", 1120, 175),
-            ("FLY", 1400, 210),
-            ("SLIME", 1870, 550),
+            (Fly.name, 600, 250),
+            (Slime.name, 1100, 550),
+            (Slime.name, 1120, 175),
+            (Fly.name, 1400, 210),
+            (Slime.name, 1870, 550),
         ]
 
         platforms = []  # Anything not on ground (excluding spikes)
@@ -511,10 +515,10 @@ class Level_04(Level):
         )  # equals width of image + width of window? Needs testing
 
         enemy_list = [
-            ("FLY", 600, 250),
-            ("SLIME", 1000, 275),
-            ("FLY", 1400, 210),
-            ("SLIME", 1870, 550),
+            (Fly.name, 600, 250),
+            (Slime.name, 1000, 275),
+            (Fly.name, 1400, 210),
+            (Slime.name, 1870, 550),
         ]
 
         platforms = []  # Anything not on ground (excluding spikes)
