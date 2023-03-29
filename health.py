@@ -10,7 +10,7 @@ HEART_FULL = (0, 94, 53, 45)
 HEART_HALF = (0, 0, 53, 45)
 
 
-class HUD():
+class HUD:
     def __init__(self, player):
         self.player = player
         self.health_draw_list = pygame.sprite.OrderedUpdates()
@@ -18,15 +18,18 @@ class HUD():
         self.health_bar()
 
     def update(self):
-        """ Update everything in this level."""
+        """Update everything in this level."""
         self.health_draw_list.update()
-        if self.player.health < self.last_health or self.player.health > self.last_health:
+        if (
+            self.player.health < self.last_health
+            or self.player.health > self.last_health
+        ):
             self.health_bar()
 
     def draw(self, screen):
         for i, heart in enumerate(self.health_draw_list.sprites()):
             heart.rect.y = 10
-            heart.rect.x = (i+0.1)*55
+            heart.rect.x = (i + 0.1) * 55
         self.health_draw_list.draw(screen)
 
     def health_bar(self):
@@ -77,10 +80,12 @@ class HUDItem(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.sprite_sheet = SpriteSheet("resources/hud_spritesheet.png")
         if sprite_sheet_data:
-            self.image = self.sprite_sheet.get_image(sprite_sheet_data[0],
-                                                     sprite_sheet_data[1],
-                                                     sprite_sheet_data[2],
-                                                     sprite_sheet_data[3])
+            self.image = self.sprite_sheet.get_image(
+                sprite_sheet_data[0],
+                sprite_sheet_data[1],
+                sprite_sheet_data[2],
+                sprite_sheet_data[3],
+            )
             self.rect = self.image.get_rect()
 
 
@@ -99,22 +104,19 @@ class Heart(HUDItem):
     def get_image(self):
         health = self.health
         if health == 10:
-            self.image = self.sprite_sheet.get_image(HEART_FULL[0],
-                                                     HEART_FULL[1],
-                                                     HEART_FULL[2],
-                                                     HEART_FULL[3])
+            self.image = self.sprite_sheet.get_image(
+                HEART_FULL[0], HEART_FULL[1], HEART_FULL[2], HEART_FULL[3]
+            )
             self.rect = self.image.get_rect()
         elif health == 5:
-            self.image = self.sprite_sheet.get_image(HEART_HALF[0],
-                                                     HEART_HALF[1],
-                                                     HEART_HALF[2],
-                                                     HEART_HALF[3])
+            self.image = self.sprite_sheet.get_image(
+                HEART_HALF[0], HEART_HALF[1], HEART_HALF[2], HEART_HALF[3]
+            )
             self.rect = self.image.get_rect()
         elif health == 0:
-            self.image = self.sprite_sheet.get_image(HEART_EMPTY[0],
-                                                     HEART_EMPTY[1],
-                                                     HEART_EMPTY[2],
-                                                     HEART_EMPTY[3])
+            self.image = self.sprite_sheet.get_image(
+                HEART_EMPTY[0], HEART_EMPTY[1], HEART_EMPTY[2], HEART_EMPTY[3]
+            )
             self.rect = self.image.get_rect()
         else:
             print("Error in heart creation")

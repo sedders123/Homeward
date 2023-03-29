@@ -14,18 +14,20 @@ class Enemy(pygame.sprite.Sprite):
     """Enemy"""
 
     def __init__(self, sprite_sheet_data=None):
-        """ Enemy constructor. Assumes constructed with user passing in
-            an array of 4 numbers like what's defined at the top of this
-            code. """
+        """Enemy constructor. Assumes constructed with user passing in
+        an array of 4 numbers like what's defined at the top of this
+        code."""
         pygame.sprite.Sprite.__init__(self)
 
         self.sprite_sheet = SpriteSheet("resources/enemies_spritesheet.png")
         # Grab the image for this platform
         if sprite_sheet_data:
-            self.image = self.sprite_sheet.get_image(sprite_sheet_data[0],
-                                                     sprite_sheet_data[1],
-                                                     sprite_sheet_data[2],
-                                                     sprite_sheet_data[3])
+            self.image = self.sprite_sheet.get_image(
+                sprite_sheet_data[0],
+                sprite_sheet_data[1],
+                sprite_sheet_data[2],
+                sprite_sheet_data[3],
+            )
             self.rect = self.image.get_rect()
 
         self.level = None
@@ -40,30 +42,26 @@ class Fly(Enemy):
         self.boundary_right = 0
 
         self.frames_left = []
-        image = self.sprite_sheet.get_image(FLY_WINGS_UP[0],
-                                            FLY_WINGS_UP[1],
-                                            FLY_WINGS_UP[2],
-                                            FLY_WINGS_UP[3])
+        image = self.sprite_sheet.get_image(
+            FLY_WINGS_UP[0], FLY_WINGS_UP[1], FLY_WINGS_UP[2], FLY_WINGS_UP[3]
+        )
         self.frames_left.append(image)
-        image = self.sprite_sheet.get_image(FLY_WINGS_DOWN[0],
-                                            FLY_WINGS_DOWN[1],
-                                            FLY_WINGS_DOWN[2],
-                                            FLY_WINGS_DOWN[3])
+        image = self.sprite_sheet.get_image(
+            FLY_WINGS_DOWN[0], FLY_WINGS_DOWN[1], FLY_WINGS_DOWN[2], FLY_WINGS_DOWN[3]
+        )
         self.frames_left.append(image)
 
         self.frames_right = []
 
-        image = self.sprite_sheet.get_image(FLY_WINGS_UP[0],
-                                            FLY_WINGS_UP[1],
-                                            FLY_WINGS_UP[2],
-                                            FLY_WINGS_UP[3])
+        image = self.sprite_sheet.get_image(
+            FLY_WINGS_UP[0], FLY_WINGS_UP[1], FLY_WINGS_UP[2], FLY_WINGS_UP[3]
+        )
         image = pygame.transform.flip(image, True, False)
         self.frames_right.append(image)
 
-        image = self.sprite_sheet.get_image(FLY_WINGS_DOWN[0],
-                                            FLY_WINGS_DOWN[1],
-                                            FLY_WINGS_DOWN[2],
-                                            FLY_WINGS_DOWN[3])
+        image = self.sprite_sheet.get_image(
+            FLY_WINGS_DOWN[0], FLY_WINGS_DOWN[1], FLY_WINGS_DOWN[2], FLY_WINGS_DOWN[3]
+        )
         image = pygame.transform.flip(image, True, False)
         self.frames_right.append(image)
 
@@ -72,7 +70,7 @@ class Fly(Enemy):
         self.alive = True
 
     def update(self):
-        """ Move the Fly."""
+        """Move the Fly."""
 
         if self.alive:
             pos = self.rect.x - self.level.world_shift
@@ -99,21 +97,25 @@ class Fly(Enemy):
         else:
             time_since_killed = pygame.time.get_ticks() - self.time_killed
             if time_since_killed < 700:
-                self.image = self.sprite_sheet.get_image(FLY_DEAD[0],
-                                                         FLY_DEAD[1],
-                                                         FLY_DEAD[2],
-                                                         FLY_DEAD[3])
+                self.image = self.sprite_sheet.get_image(
+                    FLY_DEAD[0], FLY_DEAD[1], FLY_DEAD[2], FLY_DEAD[3]
+                )
                 self.rect.y += 10
             else:
                 self.kill()
 
     def bounce_player(self):
         self.player.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self.player, self.level.platform_list, False)
+        platform_hit_list = pygame.sprite.spritecollide(
+            self.player, self.level.platform_list, False
+        )
         self.player.rect.y -= 2
 
         # If it is ok to jump, set our speed upwards
-        if len(platform_hit_list) >= 0 or self.player.rect.bottom >= constants.SCREEN_HEIGHT:
+        if (
+            len(platform_hit_list) >= 0
+            or self.player.rect.bottom >= constants.SCREEN_HEIGHT
+        ):
             self.player.change_y = -5
 
 
@@ -126,30 +128,26 @@ class Slime(Enemy):
         self.boundary_right = 0
 
         self.frames_left = []
-        image = self.sprite_sheet.get_image(SLIME_WALK_1[0],
-                                            SLIME_WALK_1[1],
-                                            SLIME_WALK_1[2],
-                                            SLIME_WALK_1[3])
+        image = self.sprite_sheet.get_image(
+            SLIME_WALK_1[0], SLIME_WALK_1[1], SLIME_WALK_1[2], SLIME_WALK_1[3]
+        )
         self.frames_left.append(image)
-        image = self.sprite_sheet.get_image(SLIME_WALK_2[0],
-                                            SLIME_WALK_2[1],
-                                            SLIME_WALK_2[2],
-                                            SLIME_WALK_2[3])
+        image = self.sprite_sheet.get_image(
+            SLIME_WALK_2[0], SLIME_WALK_2[1], SLIME_WALK_2[2], SLIME_WALK_2[3]
+        )
         self.frames_left.append(image)
 
         self.frames_right = []
 
-        image = self.sprite_sheet.get_image(SLIME_WALK_1[0],
-                                            SLIME_WALK_1[1],
-                                            SLIME_WALK_1[2],
-                                            SLIME_WALK_1[3])
+        image = self.sprite_sheet.get_image(
+            SLIME_WALK_1[0], SLIME_WALK_1[1], SLIME_WALK_1[2], SLIME_WALK_1[3]
+        )
         image = pygame.transform.flip(image, True, False)
         self.frames_right.append(image)
 
-        image = self.sprite_sheet.get_image(SLIME_WALK_2[0],
-                                            SLIME_WALK_2[1],
-                                            SLIME_WALK_2[2],
-                                            SLIME_WALK_2[3])
+        image = self.sprite_sheet.get_image(
+            SLIME_WALK_2[0], SLIME_WALK_2[1], SLIME_WALK_2[2], SLIME_WALK_2[3]
+        )
         image = pygame.transform.flip(image, True, False)
         self.frames_right.append(image)
 
@@ -158,7 +156,7 @@ class Slime(Enemy):
         self.alive = True
 
     def update(self):
-        """ Move the Fly."""
+        """Move the Fly."""
 
         if self.alive:
             pos = self.rect.x - self.level.world_shift
@@ -191,9 +189,14 @@ class Slime(Enemy):
 
     def bounce_player(self):
         self.player.rect.y += 2
-        platform_hit_list = pygame.sprite.spritecollide(self.player, self.level.platform_list, False)
+        platform_hit_list = pygame.sprite.spritecollide(
+            self.player, self.level.platform_list, False
+        )
         self.player.rect.y -= 2
 
         # If it is ok to jump, set our speed upwards
-        if len(platform_hit_list) >= 0 or self.player.rect.bottom >= constants.SCREEN_HEIGHT:
+        if (
+            len(platform_hit_list) >= 0
+            or self.player.rect.bottom >= constants.SCREEN_HEIGHT
+        ):
             self.player.change_y = -5

@@ -17,7 +17,7 @@ from player import Player
 
 
 def main():
-    """ Main Program """
+    """Main Program"""
     pygame.init()
 
     # Set the height and width of the screen
@@ -44,10 +44,9 @@ def main():
     current_level_no = 0
     current_level = level_list[current_level_no]
 
-    #HUD
+    # HUD
     game_HUD = health.HUD(player)
     score_HUD = score.ScoreHUD(player)
-
 
     active_sprite_list = pygame.sprite.Group()
     player.level = current_level
@@ -56,7 +55,7 @@ def main():
     player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
     active_sprite_list.add(player)
 
-    #Loop until the user clicks the close button.
+    # Loop until the user clicks the close button.
     done = False
 
     # Used to manage how fast the screen updates
@@ -64,9 +63,9 @@ def main():
 
     # -------- Main Program Loop -----------
     while not done:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
-                done = True # Flag that we are done so we exit this loop
+        for event in pygame.event.get():  # User did something
+            if event.type == pygame.QUIT:  # If user clicked close
+                done = True  # Flag that we are done so we exit this loop
 
             left_control_keys = [pygame.K_LEFT, pygame.K_a]
             right_control_keys = [pygame.K_d, pygame.K_RIGHT]
@@ -83,19 +82,29 @@ def main():
                 if event.key in down_control_keys:
                     player.duck()
 
-                if event.key == pygame.K_LEFT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
+                if (
+                    event.key == pygame.K_LEFT
+                    and pygame.key.get_mods() & pygame.KMOD_SHIFT
+                ):
                     if current_level_no > 0:
                         current_level_no -= 1
                         current_level = level_list[current_level_no]
                         player.level = current_level
-                        player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+                        player.rect.y = (
+                            constants.SCREEN_HEIGHT - player.rect.height - 25
+                        )
 
-                if event.key == pygame.K_RIGHT and pygame.key.get_mods() & pygame.KMOD_SHIFT:
-                    if current_level_no < len(level_list)-1:
+                if (
+                    event.key == pygame.K_RIGHT
+                    and pygame.key.get_mods() & pygame.KMOD_SHIFT
+                ):
+                    if current_level_no < len(level_list) - 1:
                         current_level_no += 1
                         current_level = level_list[current_level_no]
                         player.level = current_level
-                        player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
+                        player.rect.y = (
+                            constants.SCREEN_HEIGHT - player.rect.height - 25
+                        )
 
             if event.type == pygame.KEYUP:
                 if event.key in left_control_keys and player.change_x < 0:
@@ -124,7 +133,9 @@ def main():
             current_level.shift_world(-diff)
 
         # If the player gets near the left side, shift the world right (+x)
-        if player.rect.x <= 120 and current_level.world_shift < -1:  # -1 to prevent edge of wall being seen
+        if (
+            player.rect.x <= 120 and current_level.world_shift < -1
+        ):  # -1 to prevent edge of wall being seen
             diff = 120 - player.rect.x
             player.rect.x = 120
             current_level.shift_world(diff)
@@ -132,7 +143,7 @@ def main():
         # If the player gets to the end of the level, go to the next level
         if current_position < current_level.level_limit:
             player.rect.x = 120
-            if current_level_no < len(level_list)-1:
+            if current_level_no < len(level_list) - 1:
                 current_level_no += 1
                 print(current_level_no)
                 current_level = level_list[current_level_no]
@@ -140,11 +151,11 @@ def main():
                 player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 25
 
         if player.health <= 0:
-            current_level_no = len(level_list)-1
+            current_level_no = len(level_list) - 1
             current_level = level_list[current_level_no]
             player.level = current_level
             player.rect.y = constants.SCREEN_HEIGHT - player.rect.height - 40
-            player.rect.x = (constants.SCREEN_WIDTH/2) - (player.rect.width/2)
+            player.rect.x = (constants.SCREEN_WIDTH / 2) - (player.rect.width / 2)
             time_since_death = pygame.time.get_ticks() - player.death_time
             if time_since_death > 2000:
                 player.health = 100
@@ -170,6 +181,7 @@ def main():
     # Be IDLE friendly. If you forget this line, the program will 'hang'
     # on exit.
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()

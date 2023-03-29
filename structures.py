@@ -11,40 +11,43 @@ from spritesheet import SpriteSheet
 #   Y location of sprite
 #   Width of sprite
 #   Height of sprite
-INVISIBLE_WALL        = (0, 0, 0, 700)
-GRASS_LEFT            = (576, 720, 70, 70)
-GRASS_RIGHT           = (576, 576, 70, 70)
-GRASS_MIDDLE          = (504, 576, 70, 70)
-GRASS_ROUND           = (648, 0, 70, 70)
-STONE_PLATFORM_LEFT   = (432, 720, 70, 40)
+INVISIBLE_WALL = (0, 0, 0, 700)
+GRASS_LEFT = (576, 720, 70, 70)
+GRASS_RIGHT = (576, 576, 70, 70)
+GRASS_MIDDLE = (504, 576, 70, 70)
+GRASS_ROUND = (648, 0, 70, 70)
+STONE_PLATFORM_LEFT = (432, 720, 70, 40)
 STONE_PLATFORM_MIDDLE = (648, 648, 70, 40)
-STONE_PLATFORM_RIGHT  = (792, 648, 70, 40)
-STONE_CLIFF_LEFT      = (144, 432, 70, 70)
-STONE_CLIFF_MIDDLE    = (72, 432, 70, 70)
-STONE_CLIFF_RIGHT     = (144, 288, 70, 70)
+STONE_PLATFORM_RIGHT = (792, 648, 70, 40)
+STONE_CLIFF_LEFT = (144, 432, 70, 70)
+STONE_CLIFF_MIDDLE = (72, 432, 70, 70)
+STONE_CLIFF_RIGHT = (144, 288, 70, 70)
 
 
 class Platform(pygame.sprite.Sprite):
-    """ Platform the user can jump on """
+    """Platform the user can jump on"""
 
     def __init__(self, sprite_sheet_data):
-        """ Platform constructor. Assumes constructed with user passing in
-            an array of 5 numbers like what's defined at the top of this
-            code. """
+        """Platform constructor. Assumes constructed with user passing in
+        an array of 5 numbers like what's defined at the top of this
+        code."""
         pygame.sprite.Sprite.__init__(self)
 
         sprite_sheet = SpriteSheet("resources/tiles_spritesheet.png")
         # Grab the image for this platform
-        self.image = sprite_sheet.get_image(sprite_sheet_data[0],
-                                            sprite_sheet_data[1],
-                                            sprite_sheet_data[2],
-                                            sprite_sheet_data[3])
+        self.image = sprite_sheet.get_image(
+            sprite_sheet_data[0],
+            sprite_sheet_data[1],
+            sprite_sheet_data[2],
+            sprite_sheet_data[3],
+        )
 
         self.rect = self.image.get_rect()
 
 
 class MovingPlatform(Platform):
-    """ This is a fancier platform that can actually move. """
+    """This is a fancier platform that can actually move."""
+
     change_x = 0
     change_y = 0
 
@@ -57,12 +60,12 @@ class MovingPlatform(Platform):
     player = None
 
     def update(self):
-        """ Move the platform.
-            If the player is in the way, it will shove the player
-            out of the way. This does NOT handle what happens if a
-            platform shoves a player into another object. Make sure
-            moving platforms have clearance to push the player around
-            or add code to handle what happens if they don't. """
+        """Move the platform.
+        If the player is in the way, it will shove the player
+        out of the way. This does NOT handle what happens if a
+        platform shoves a player into another object. Make sure
+        moving platforms have clearance to push the player around
+        or add code to handle what happens if they don't."""
 
         # Move left/right
         self.rect.x += self.change_x
