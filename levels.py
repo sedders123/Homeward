@@ -73,6 +73,39 @@ class Level():
             floor.append(platform)
         return floor
 
+    def construct_world(self, level, floors, level_enemies, y_offset = 0):
+        for floor in floors:
+            for platform in floor:
+                level.append(platform)
+
+        # Go through the array above and add structures
+        for platform in level:
+            block = structures.Platform(platform[0])
+            block.rect.x = platform[1]
+            block.rect.y = platform[2] - y_offset
+            block.player = self.player
+            self.platform_list.add(block)
+
+        for enemy in level_enemies:
+            if enemy[0] == "SLIME":
+                block = enemies.Slime()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 100
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
+            elif enemy[0] == "FLY":
+                block = enemies.Fly()
+                block.rect.x = enemy[1]
+                block.rect.y = enemy[2]
+                block.boundary_left = enemy[1]
+                block.boundary_right = enemy[1] + 300
+                block.player = self.player
+                block.level = self
+                self.enemy_list.add(block)
+
 
 class MainMenu(Level):
     """ Definition for Main Menu"""
@@ -94,17 +127,7 @@ class MainMenu(Level):
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
         floors.append(first_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2] - 15
-            block.player = self.player
-            self.platform_list.add(block)
+        self.construct_world(level, floors, [], y_offset=15)
 
 
 
@@ -141,28 +164,7 @@ class LevelTutorial(Level):
         floors.append(first_floor)
         floors.append(second_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-
-        for enemy in enemy_list:
-            if enemy[0] == "SLIME":
-                block = enemies.Slime()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 100
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
+        self.construct_world(level, floors, enemy_list)
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
@@ -218,37 +220,7 @@ class Level_01(Level):
         floors.append(second_floor)
         floors.append(third_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-
-        for enemy in enemy_list:
-            if enemy[0] == "FLY":
-                block = enemies.Fly()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 300
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
-            elif enemy[0] == "SLIME":
-                block = enemies.Slime()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 100
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
+        self.construct_world(level, floors, enemy_list)
 
         # Add a custom moving platform
         block = structures.MovingPlatform(structures.STONE_PLATFORM_MIDDLE)
@@ -334,13 +306,12 @@ class Level_01(Level):
 
 
 
-### jordans level ###
 # Create structures for the level
 class Level_02(Level):
     """ Definition for level 2. """
 
     def __init__(self, player):
-        """ Create level 1. """
+        """ Create level 2. """
 
         # Call the parent constructor
         Level.__init__(self, player)
@@ -384,40 +355,7 @@ class Level_02(Level):
         floors.append(first_floor)
         floors.append(second_floor)
 
-
-        for floor in floors:
-            for platform in floor:
-                structures_list.append(platform)
-
-
-        # Go through the array above and add structures
-        for platform in structures_list:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-
-        for enemy in enemy_list:
-            if enemy[0] == "FLY":
-                block = enemies.Fly()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block .boundary_right = enemy[1] + 300
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
-            elif enemy[0] == "SLIME":
-                block = enemies.Slime()
-                block.rect.x = enemy[1]
-
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 180
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
+        self.construct_world(structures_list, floors, enemy_list)
 
 
         # Add a custom moving platform
@@ -431,7 +369,6 @@ class Level_02(Level):
         block.level = self
         self.platform_list.add(block)
 
-### jed's level ###
 class Level_03(Level):
     """ Definition for level 3. """
 
@@ -474,37 +411,7 @@ class Level_03(Level):
         floors.append(third_floor)
         floors.append(fourth_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-
-        for enemy in enemy_list:
-            if enemy[0] == "FLY":
-                block = enemies.Fly()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 300
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
-            elif enemy[0] == "SLIME":
-                block = enemies.Slime()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 200
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
+        self.construct_world(level, floors, enemy_list)
 
 
         # Add a custom moving platform
@@ -573,7 +480,6 @@ class Level_03(Level):
         block.level = self
         self.platform_list.add(block)
 
-### alex level ###
 class Level_04(Level):
     """ Definition for level 4. """
 
@@ -621,37 +527,7 @@ class Level_04(Level):
         floors.append(third_floor)
         floors.append(fourth_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2]
-            block.player = self.player
-            self.platform_list.add(block)
-
-        for enemy in enemy_list:
-            if enemy[0] == "FLY":
-                block = enemies.Fly()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 300
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
-            elif enemy[0] == "SLIME":
-                block = enemies.Slime()
-                block.rect.x = enemy[1]
-                block.rect.y = enemy[2]
-                block.boundary_left = enemy[1]
-                block.boundary_right = enemy[1] + 200
-                block.player = self.player
-                block.level = self
-                self.enemy_list.add(block)
+        self.construct_world(level, floors, enemy_list)
 
 
         # Add a custom moving platform
@@ -709,17 +585,7 @@ class GameOver(Level):
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
         floors.append(first_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2] - 15
-            block.player = self.player
-            self.platform_list.add(block)
+        self.construct_world(level, floors, [], y_offset=15)
 
 class YouWin(Level):
     """ Definition for You WIn Menu"""
@@ -742,14 +608,4 @@ class YouWin(Level):
         first_floor = self.make_floor(structures.GRASS_MIDDLE, -5, self.FLOOR, 1000)
         floors.append(first_floor)
 
-        for floor in floors:
-            for platform in floor:
-                level.append(platform)
-
-        # Go through the array above and add structures
-        for platform in level:
-            block = structures.Platform(platform[0])
-            block.rect.x = platform[1]
-            block.rect.y = platform[2] - 15
-            block.player = self.player
-            self.platform_list.add(block)
+        self.construct_world(level, floors, [], y_offset=15)
